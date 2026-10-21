@@ -2,18 +2,15 @@
 
 Aplicação de cadastro de clientes para avaliação prática de qualidade. Contém comportamentos defeituosos intencionais. Use somente dados fictícios.
 
-## Executar
+## Acessar
 
-Back-end em **AdonisJS 7 + TypeScript**, com SQLite nativo do Node.js. Requer **Node.js 24 ou superior** e npm.
+Aplicação **100% estática**, sem API, back-end, banco remoto ou instalação para o candidato. O CRUD usa localStorage: os cadastros ficam somente no navegador e na origem em que o site foi aberto. Cada candidato tem sua própria base. Recarregar mantém os dados; limpar os dados do site ou usar outro navegador inicia outra base. Use "Restaurar dados" para retornar aos 18 clientes fictícios. Não é preciso login.
 
-```sh
-git clone https://github.com/paulo-unibra/teste-qa.git
-cd teste-qa
-npm ci
-npm start
-```
+## GitHub Pages
 
-Abra http://localhost:8000. O banco SQLite é criado automaticamente com 18 clientes fictícios. Os dados persistem entre reinicializações. Para restaurar a base, pare o servidor, remova `data.sqlite3` e execute novamente. Cada candidato deve usar sua própria cópia.
+Em Settings → Pages → Build and deployment, selecione **GitHub Actions** como Source. Execute o workflow "Publicar GitHub Pages" na aba Actions ou envie um commit à main. A URL esperada após publicação é https://paulo-unibra.github.io/teste-qa/ — confirme o resultado do workflow antes de compartilhar.
+
+Somente a pasta public/ é publicada. Os caminhos relativos também funcionam no subdiretório /teste-qa/.
 
 ## Escopo esperado
 
@@ -35,16 +32,9 @@ Sugestão: 60–90 minutos de exploração e 30 minutos para relatório. Entregu
 
 ## Ambiente
 
-Sem login e sem serviços externos. Dados armazenados apenas no SQLite local. Mensagens de SQL/stack trace fazem parte do exercício; não há credenciais reais. O erro SQL é provocado por uma consulta inválida fixa, sem concatenar entrada do usuário em SQL. Não use esta aplicação como base de produção.
+Todos os defeitos do exercício acontecem no navegador. As mensagens de SQL, caminho de banco e stack trace são textos fictícios simulados; nenhuma consulta SQL é executada. Não existe API nem serviço externo. Use dados fictícios. O navegador pode bloquear ou limitar localStorage; dados não são sincronizados entre dispositivos e podem ser apagados pelas configurações do navegador.
 
-`HOST` (padrão 127.0.0.1), `PORT` (8000) e `QA_DB` permitem configurar execução. Não publique um banco com dados pessoais.
+## Verificação para o mantenedor
 
-## Desenvolvimento e verificação
+Com Node.js 24 ou superior, execute `npm test`. Não há dependências a instalar. Os testes verificam CRUD local, recarga do módulo, manutenção da base vazia e simulações. Para desenvolvimento, sirva public/ com qualquer servidor de arquivos estáticos; abra pela URL HTTP, em vez de clicar no HTML como arquivo local.
 
-```sh
-npm run dev
-npm run typecheck
-npm test
-```
-
-O teste usa um SQLite temporário e verifica CRUD, persistência após reiniciar e alguns comportamentos intencionais. A interface permanece em `public/`; rotas em `start/routes.ts`, controller em `app/controllers/` e persistência em `app/services/customers.ts`. Não usa Python nem exige servidor de banco separado.
