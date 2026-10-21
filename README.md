@@ -4,12 +4,13 @@ Aplicação de cadastro de clientes para avaliação prática de qualidade. Cont
 
 ## Executar
 
-Requer Python 3.10 ou superior, sem dependências externas.
+Back-end em **AdonisJS 7 + TypeScript**, com SQLite nativo do Node.js. Requer **Node.js 24 ou superior** e npm.
 
 ```sh
 git clone https://github.com/paulo-unibra/teste-qa.git
 cd teste-qa
-python3 server.py
+npm ci
+npm start
 ```
 
 Abra http://localhost:8000. O banco SQLite é criado automaticamente com 18 clientes fictícios. Os dados persistem entre reinicializações. Para restaurar a base, pare o servidor, remova `data.sqlite3` e execute novamente. Cada candidato deve usar sua própria cópia.
@@ -37,3 +38,13 @@ Sugestão: 60–90 minutos de exploração e 30 minutos para relatório. Entregu
 Sem login e sem serviços externos. Dados armazenados apenas no SQLite local. Mensagens de SQL/stack trace fazem parte do exercício; não há credenciais reais. O erro SQL é provocado por uma consulta inválida fixa, sem concatenar entrada do usuário em SQL. Não use esta aplicação como base de produção.
 
 `HOST` (padrão 127.0.0.1), `PORT` (8000) e `QA_DB` permitem configurar execução. Não publique um banco com dados pessoais.
+
+## Desenvolvimento e verificação
+
+```sh
+npm run dev
+npm run typecheck
+npm test
+```
+
+O teste usa um SQLite temporário e verifica CRUD, persistência após reiniciar e alguns comportamentos intencionais. A interface permanece em `public/`; rotas em `start/routes.ts`, controller em `app/controllers/` e persistência em `app/services/customers.ts`. Não usa Python nem exige servidor de banco separado.
